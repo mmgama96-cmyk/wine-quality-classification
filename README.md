@@ -82,9 +82,9 @@ Essas correlações ajudam a compreender como os parâmetros químicos interagem
 
 Para responder quais variáveis são mais importantes e quais são irrelevantes, medimos a correlação de cada característica com a nota de qualidade.
 
-### Resultados da Correlação entre as características químicas e qualidade do vinho
+## Resultados da Correlação entre as características químicas e qualidade do vinho
 
-Variáveis com correlação positiva:
+### Variáveis com correlação positiva:
 
 - Álcool (≈ 0,49) É a variável com maior correlação positiva, indicando que valores mais altos tendem a estar associados a vinhos de melhor qualidade.
 - Sulfatos (≈ 0,26) Apresentam correlação positiva fraca, mas é a segunda maior entre as variáveis, sugerindo que concentrações maiores podem estar relacionadas a vinhos mais bem avaliados.
@@ -92,7 +92,7 @@ Variáveis com correlação positiva:
 - Acidez fixa (≈ 0,12) Correlação positiva fraca, mas presente.
 - Açúcar residual (≈ 0,02) Correlação praticamente nula, indicando pouca influência na qualidade.
 
-Variáveis com correlação negativa:
+### Variáveis com correlação negativa:
 
 - Acidez volátil (≈ -0,41) É a variável com maior correlação negativa, indicando que níveis mais altos tendem a estar associados a vinhos de menor qualidade.
 - Densidade (≈ -0,19) Correlação negativa fraca.
