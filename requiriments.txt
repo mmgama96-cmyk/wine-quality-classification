@@ -1,4 +1,4 @@
-# Dependências do projeto Tech Challenge – Classificação da Qualidade de Vinhos
+Dependências do projeto Tech Challenge – Classificação da Qualidade de Vinhos
 pandas
 numpy
 matplotlib
