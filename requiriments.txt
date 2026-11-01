@@ -1,30 +1,6 @@
-## 🛠️ Tecnologias e bibliotecas utilizadas
-
-O projeto foi desenvolvido em Python, utilizando as seguintes bibliotecas e ferramentas:
-
-### Linguagem e ambiente
-- **Python:** linguagem utilizada no desenvolvimento do projeto.
-- **Google Colab:** ambiente de desenvolvimento e execução do notebook.
-
-### Manipulação e análise de dados
-- **Pandas:** manipulação, organização e análise de dados.
-- **NumPy:** operações matemáticas e computacionais.
-
-### Visualização de dados
-- **Matplotlib:** criação de gráficos e visualizações.
-- **Seaborn:** visualização estatística e análise exploratória de dados.
-
-### Machine Learning – Scikit-learn
-- **Model Selection:** `train_test_split`, `StratifiedKFold`, `cross_validate` e `cross_val_predict`.
-- **Preprocessing:** `StandardScaler`.
-- **Linear Models:** `LogisticRegression`.
-- **Ensemble Methods:** `RandomForestClassifier` e `GradientBoostingClassifier`.
-- **Metrics:** `accuracy_score`, `precision_score`, `recall_score`, `f1_score`, `roc_auc_score`, `confusion_matrix` e `roc_curve`.
-- **Pipeline:** `make_pipeline`.
-
-### Instalação das bibliotecas
-
-```bash
-pip install pandas numpy matplotlib seaborn scikit-learn
-```
-
+# Dependências do projeto Tech Challenge – Classificação da Qualidade de Vinhos
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
