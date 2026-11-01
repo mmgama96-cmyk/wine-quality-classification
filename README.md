@@ -101,7 +101,7 @@ Variáveis com correlação negativa:
 - Dióxido de enxofre livre (≈ -0,07) Correlação negativa muito fraca.
 - pH (≈ -0,06) Correlação negativa mínima, indicando que o pH praticamente não diferencia vinhos bons de ruins nesta base.
 
-######## Principais resultados
+## Principais resultados
 
 A análise identificou que:
 
