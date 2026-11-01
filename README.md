@@ -1,134 +1,140 @@
-# Tech Challenge Fase 2: Classificando a qualidade de vinhos com Machine Learning
+# 🍷 Tech Challenge – Fase 2: Classificação da Qualidade de Vinhos com Machine Learning
 
-## Objetivo
+## 📌 Sobre o projeto
 
-Desenvolver um modelo de classificação capaz de prever se um vinho é de alta qualidade (nota 7 ou mais) ou de baixa/média qualidade (nota abaixo de 7), a partir das suas características físico-químicas.
+Este projeto tem como objetivo desenvolver modelos de Machine Learning capazes de classificar vinhos de acordo com sua qualidade, utilizando características físico-químicas como teor alcoólico, acidez, densidade, sulfatos e outros componentes.
 
-## Base de dados
+A proposta consiste em transformar a avaliação original dos vinhos em um problema de classificação binária, identificando quais características estão mais associadas a vinhos de alta qualidade e avaliando a capacidade dos modelos de realizar essas previsões.
 
-Wine Quality Dataset (Kaggle), com 1.143 amostras de vinho tinto e 11 variáveis físico-químicas, além da nota de qualidade atribuída por especialistas.
+O projeto foi desenvolvido utilizando Python, análise exploratória de dados e algoritmos de aprendizado supervisionado.
 
-## Metodologia
+## 🎯 Objetivos
 
-O projeto foi estruturado com base na metodologia CRISP-DM:
+- Analisar as características físico-químicas dos vinhos.
+- Identificar padrões e correlações entre as variáveis.
+- Investigar quais características estão mais associadas à qualidade.
+- Desenvolver e comparar diferentes modelos de classificação.
+- Avaliar o desempenho dos modelos considerando o desbalanceamento das classes.
+- Identificar o modelo mais adequado de acordo com o objetivo do negócio.
 
-1. Compreensão do problema
-2. Análise exploratória de dados (EDA)
-3. Pré-processamento
-4. Desenvolvimento dos modelos
-5. Avaliação dos modelos
-6. Interpretação dos resultados
+## 📊 Base de dados
 
-## Principais análises
+O projeto utiliza o dataset `WineQT.csv`, que contém informações sobre as propriedades físico-químicas dos vinhos e suas respectivas avaliações de qualidade.
 
-### Etapa 1: Compreensão do Problema
+A variável alvo original é `quality`, que foi transformada em uma variável binária:
 
-A variável alvo é a qualidade do vinho (quality), uma nota dada por especialistas. Para simplificar o problema, transformamos essa nota em uma classificação binária:
+| Classificação | Critério |
+|---|---|
+| 1 – Alta qualidade | Nota igual ou superior a 7 |
+| 0 – Baixa/média qualidade | Nota inferior a 7 |
 
-1 = alta qualidade (nota 7 ou mais)
-0 = baixa/média qualidade (nota abaixo de 7)
+Após a remoção da coluna de identificação (`Id`) e de 125 registros duplicados, a base utilizada na análise ficou com **1.018 vinhos**.
 
-### Etapa 2: Análise Exploratória de Dados (EDA)
+Distribuição das classes:
 
-Nesta etapa investigamos a distribuição das variáveis, as correlações entre elas, a presença de outliers e o balanceamento das classes.
+- Baixa/média qualidade: 881 vinhos (86,5%).
+- Alta qualidade: 137 vinhos (13,5%).
 
-A distribuição do teor alcoólico apresenta um pico de frequência logo acima de 9%, indicando que a maior parte das amostras possui graduação alcoólica relativamente moderada. A distribuição se concentra entre 9% e 11%, com média de 10,45% e desvio-padrão de 1,10, o que mostra que valores muito baixos ou muito elevados são menos frequentes.
+O desbalanceamento das classes foi considerado durante o desenvolvimento e a avaliação dos modelos.
 
-### Presença de outliers
+## 🔎 Etapas do projeto
 
-A análise do boxplot do teor alcoólico identificou a presença de outliers. Como esses valores podem refletir características reais de determinados vinhos e não necessariamente erros de medição, optou-se por mantê-los na base de dados.
+### 1. Compreensão do problema
+Definição da variável alvo e transformação do problema em uma classificação binária.
 
-Resumo do que sabemos até aqui sobre o álcool
+### 2. Análise Exploratória de Dados (EDA)
+Investigação da distribuição das variáveis, correlações, outliers e diferenças entre vinhos de alta e baixa/média qualidade.
 
-Pico de frequência logo acima de 9%
-Média de 10,45%
-Distribuição concentrada em torno dos valores centrais
-Presença de poucos outliers
-Variável aparentemente consistente
+Principais descobertas:
+- O teor alcoólico apresentou a maior correlação positiva com a qualidade (aproximadamente 0,49).
+- A acidez volátil apresentou a maior correlação negativa (aproximadamente -0,41).
+- Vinhos de maior qualidade apresentaram, em geral, maior teor alcoólico e menor acidez volátil.
+- Outliers foram mantidos por representarem possíveis características reais dos vinhos.
 
-### Maiores Correlações
+### 3. Pré-processamento
+- Remoção de registros duplicados.
+- Exclusão da coluna de identificação.
+- Separação entre variáveis preditoras e variável alvo.
+- Divisão dos dados em treino (80%) e teste (20%).
+- Estratificação para preservar a proporção das classes.
+- Padronização das variáveis para os modelos sensíveis à escala.
 
-quality e quality_binary = 0,71
-density e fixed acidity = 0,68
-citric acid e fixed acidity = 0,67
-free sulfur dioxide e total sulfur dioxide = 0,66
+### 4. Desenvolvimento dos modelos
 
-### Menores Correlações
+Foram desenvolvidos três modelos de classificação:
 
-pH e fixed acidity = -0,69
-citric acid e pH = -0,55
-citric acid e volatile acidity = -0,54
-density e alcohol = -0,50
+- **Regressão Logística:** modelo utilizado como abordagem de classificação linear.
+- **Random Forest:** modelo baseado em múltiplas árvores de decisão.
+- **Gradient Boosting:** modelo baseado no treinamento sequencial de árvores.
 
-### Resultados da Matriz de Correlação
+Foi utilizada a estratégia `class_weight='balanced'` nos modelos em que essa opção estava disponível, buscando reduzir o impacto do desbalanceamento das classes.
 
-A análise da matriz de correlação revelou relações relevantes entre algumas das variáveis físico-químicas do conjunto de dados. Entre as correlações positivas mais fortes, destacam-se as relações entre densidade e acidez fixa (r = 0,68), entre acidez fixa e ácido cítrico (r = 0,67) e entre dióxido de enxofre livre e dióxido de enxofre total (r = 0,66). Esses resultados indicam que essas variáveis tendem a aumentar juntas nas amostras analisadas.
+### 5. Avaliação dos modelos
 
-Entre as correlações negativas, a mais expressiva foi observada entre pH e acidez fixa (r = -0,69), seguida das relações entre ácido cítrico e pH (r = -0,55), ácido cítrico e acidez volátil (r = -0,54) e densidade e teor alcoólico (r = -0,50). Esses resultados sugerem relações inversas entre as características químicas dos vinhos.
+Os modelos foram avaliados utilizando:
 
-A correlação entre a variável original de qualidade e a variável binária criada para a classificação foi de 0,71, resultado esperado, já que uma foi criada a partir da outra.
+- Acurácia (Accuracy)
+- Precisão (Precision)
+- Recall
+- F1-score
+- ROC-AUC
 
-### Discussão da Matriz de Correlação
+Também foi aplicada validação cruzada estratificada com 5 divisões (Stratified K-Fold), para avaliar a consistência dos resultados.
 
-As correlações identificadas são coerentes com as propriedades físico-químicas dos vinhos. A forte correlação negativa entre pH e acidez fixa (r = -0,69) indica que amostras com maior acidez tendem a apresentar menores valores de pH, comportamento esperado do ponto de vista químico.
+### 6. Ajuste do ponto de corte
 
-A correlação positiva entre acidez fixa e ácido cítrico (r = 0,67) sugere que ambos os componentes contribuem juntos para a composição ácida do vinho. Da mesma forma, a correlação positiva entre dióxido de enxofre livre e dióxido de enxofre total (r = 0,66) era esperada, já que as duas variáveis medem partes do mesmo composto presente na bebida.
+Foi realizado o ajuste do threshold da Random Forest, buscando melhorar o equilíbrio entre precisão e recall.
 
-Outro resultado relevante foi a correlação negativa entre densidade e teor alcoólico (r = -0,50), indicando que vinhos com maior concentração alcoólica tendem a apresentar menor densidade. Esse comportamento está ligado ao processo de fermentação, em que o açúcar é convertido em álcool, que é menos denso que a água.
+O ponto de corte foi selecionado por validação cruzada utilizando exclusivamente os dados de treinamento, evitando utilizar o conjunto de teste nessa escolha.
 
-Essas correlações ajudam a compreender como os parâmetros químicos interagem entre si e trazem informações importantes para a etapa de modelagem, ao indicar quais variáveis podem influenciar a qualidade do vinho.
+## 📈 Resultados
 
-### Quais variáveis influenciam a qualidade do vinho?
+### Comparação dos modelos – Validação cruzada
 
-Para responder quais variáveis são mais importantes e quais são irrelevantes, medimos a correlação de cada característica com a nota de qualidade.
+Média ± desvio-padrão das cinco rodadas:
 
-## Resultados da Correlação entre as características químicas e qualidade do vinho
+| Modelo | Acurácia | Precisão | Recall | F1-score | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Regressão Logística | 0,798 | 0,386 | 0,811 | 0,521 | 0,878 |
+| Random Forest | 0,894 | 0,731 | 0,352 | 0,452 | 0,883 |
+| Gradient Boosting | 0,882 | 0,586 | 0,395 | 0,466 | 0,870 |
 
-### Variáveis com correlação positiva:
+A validação cruzada demonstrou que os modelos apresentam capacidades de separação semelhantes, mas diferentes comportamentos na identificação dos vinhos de alta qualidade.
 
-- Álcool (≈ 0,49) É a variável com maior correlação positiva, indicando que valores mais altos tendem a estar associados a vinhos de melhor qualidade.
-- Sulfatos (≈ 0,26) Apresentam correlação positiva fraca, mas é a segunda maior entre as variáveis, sugerindo que concentrações maiores podem estar relacionadas a vinhos mais bem avaliados.
-- Ácido cítrico (≈ 0,24) Também apresenta correlação positiva, ainda que mais discreta.
-- Acidez fixa (≈ 0,12) Correlação positiva fraca, mas presente.
-- Açúcar residual (≈ 0,02) Correlação praticamente nula, indicando pouca influência na qualidade.
+### Random Forest – Ajuste do threshold
 
-### Variáveis com correlação negativa:
+O ajuste do ponto de corte de 50% para 25% apresentou uma melhora importante na identificação dos vinhos de alta qualidade.
 
-- Acidez volátil (≈ -0,41) É a variável com maior correlação negativa, indicando que níveis mais altos tendem a estar associados a vinhos de menor qualidade.
-- Densidade (≈ -0,19) Correlação negativa fraca.
-- Dióxido de enxofre total (≈ -0,18) Correlação negativa fraca.
-- Cloretos (≈ -0,12) Correlação negativa leve.
-- Dióxido de enxofre livre (≈ -0,07) Correlação negativa muito fraca.
-- pH (≈ -0,06) Correlação negativa mínima, indicando que o pH praticamente não diferencia vinhos bons de ruins nesta base.
+| Métrica | Threshold 0,50 | Threshold 0,25 |
+|---|---:|---:|
+| Acurácia | 0,907 | 0,887 |
+| Precisão | 0,900 | 0,556 |
+| Recall | 0,333 | 0,741 |
+| F1-score | 0,486 | 0,635 |
 
-## Principais resultados
+Com o threshold de 25%, o modelo passou a identificar 20 dos 27 vinhos de alta qualidade presentes no conjunto de teste, contra apenas 9 identificados anteriormente.
 
-A análise identificou que:
+O F1-score aumentou de 0,486 para 0,635, representando o melhor resultado obtido no conjunto de teste.
 
-- o crescimento da receita está fortemente relacionado ao aumento da quantidade de pedidos;
-- os períodos de maior volume não apresentam necessariamente maior ticket médio;
-- a maior parte dos pedidos foi entregue dentro do prazo estimado;
-- atrasos mais graves estão associados a uma redução relevante na nota média;
-- Produto e Assuntos Logísticos concentram a maior parte das reclamações;
-- nos pedidos entregues no prazo, predominam reclamações relacionadas ao produto;
-- nos pedidos com atraso leve ou grave, os assuntos logísticos tornam-se o principal motivo de reclamação;
-- o cumprimento do prazo é importante, mas não é suficiente para garantir a satisfação do cliente;
-- qualidade do produto, conformidade com o anúncio e desempenho dos sellers também influenciam a experiência.
+## 🧪 Principais insights
 
-## Recomendações de negócio
+A interpretação dos modelos destacou três características relevantes:
 
-Com base nos resultados, recomenda-se:
+**1. Teor alcoólico**
 
-1. Reforçar a capacidade logística nos períodos de maior demanda.
-2. Monitorar pedidos com risco de atraso e comunicar o cliente de forma proativa.
-3. Acompanhar sellers com baixa nota média e alta taxa de reclamação.
-4. Melhorar os controles de qualidade, descrição e conformidade dos produtos.
-5. Revisar processos de embalagem, separação e expedição.
-6. Priorizar ocorrências financeiras devido ao impacto elevado sobre a satisfação.
-7. Implantar indicadores recorrentes de satisfação, SLA e desempenho por seller.
-8. Criar planos de melhoria para sellers com volume relevante e desempenho crítico.
+Foi a variável de maior importância nos dois modelos. Vinhos com maior teor alcoólico apresentaram maior associação com avaliações positivas.
 
-## Tecnologias utilizadas
+**2. Acidez volátil**
+
+Apresentou associação negativa com a qualidade. Valores mais elevados tendem a estar relacionados a avaliações inferiores.
+
+**3. Sulfatos**
+
+Apresentaram associação positiva com a qualidade e foram identificados como uma das variáveis relevantes para a classificação.
+
+Essas relações representam associações identificadas na base de dados, não necessariamente relações de causa e efeito.
+
+## 🛠️ Tecnologias e bibliotecas utilizadas
 
 - Python
 - Google Colab
@@ -136,26 +142,56 @@ Com base nos resultados, recomenda-se:
 - NumPy
 - Matplotlib
 - Seaborn
-- Plotly
 - Scikit-learn
+- Machine Learning
+- Análise Exploratória de Dados (EDA)
+- Validação Cruzada (Cross-Validation)
 
-## Estrutura do repositório
+## 📂 Estrutura do projeto
 
-- `Tech_Challenge_Olist.ipynb`: notebook principal com preparação, análises, gráficos e conclusões
-- `README.md`: documentação do projeto
-- `.gitignore`: definição dos arquivos que não devem ser publicados
+```text
+Tech-Challenge-Fase-2/
+│
+├── data/
+│   └── WineQT.csv
+│
+├── notebooks/
+│   └── Colab_Tech_Challenge_2_Vinhos.ipynb
+│
+└── README.md
+```
 
-## Como executar o projeto
+## 🚀 Como executar o projeto
 
-1. Faça o download ou clone este repositório.
-2. Abra o notebook no Google Colab.
-3. Faça o download das bases públicas da Olist.
-4. Salve os arquivos no Google Drive.
-5. Ajuste a variável `caminho` no notebook.
-6. Execute as células na ordem apresentada.
+1. Clone este repositório:
 
-Exemplo de configuração:
+```bash
+git clone URL_DO_REPOSITORIO
+```
 
-```python
-# Altere o caminho conforme o local em que as bases foram salvas
-caminho = '/content/drive/MyDrive/Tech Challenge Fase 1/Bases/Olist/'
+2. Instale as bibliotecas necessárias:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn
+```
+
+3. Abra o notebook no Google Colab ou Jupyter Notebook.
+
+4. Disponibilize o arquivo `WineQT.csv` na pasta de dados e ajuste o caminho de leitura no notebook, se necessário.
+
+5. Execute as células sequencialmente para reproduzir as análises, o treinamento e a avaliação dos modelos.
+
+## 💡 Conclusão
+
+O projeto demonstrou que técnicas de Machine Learning podem auxiliar na identificação de padrões associados à qualidade dos vinhos a partir de suas características físico-químicas.
+
+A Random Forest com threshold ajustado para 25% apresentou o melhor F1-score no conjunto de teste (0,635), enquanto a Regressão Logística demonstrou maior capacidade de identificar vinhos de alta qualidade na validação cruzada, com recall médio de 0,811.
+
+A escolha do modelo depende do objetivo do produtor: priorizar a identificação da maior quantidade possível de vinhos promissores ou aumentar a segurança das classificações positivas.
+
+Como próximos passos, destacam-se o ajuste de hiperparâmetros e a validação dos modelos com uma base de dados maior e mais representativa.
+
+---
+
+**Projeto desenvolvido como parte do Tech Challenge – Fase 2.**
+
