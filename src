@@ -1,9 +1,9 @@
-## 📁 Scripts auxiliares
+Scripts auxiliares
 
 O projeto possui scripts Python separados para organizar as etapas de preparação dos dados e desenvolvimento dos modelos de Machine Learning.
 
 | Script | Descrição |
-|---|---|
+
 | `preprocessing.py` | Carregamento, limpeza, transformação e divisão dos dados em treino e teste. |
 | `modeling.py` | Treinamento dos modelos, validação cruzada, avaliação de desempenho e ajuste do threshold. |
 
